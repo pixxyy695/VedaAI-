@@ -1,0 +1,48 @@
+services:
+  - type: keyvalue
+    name: vedai-redis
+    plan: free
+    ipAllowList: []
+    maxmemoryPolicy: noeviction
+
+  - type: web
+    name: vedai-api
+    runtime: node
+    plan: free
+    buildCommand: npm install --include=dev && npm --workspace @vedai/api run build
+    startCommand: npm --workspace @vedai/api start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.12.0
+      - key: NODE_ENV
+        value: production
+      - key: WEB_ORIGIN
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: vedai-redis
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-5-nano
+      - key: OPENAI_MAX_OUTPUT_TOKENS
+        value: 2500
+      - key: OPENAI_SOURCE_TEXT_LIMIT
+        value: 3500
+      - key: MAX_GENERATION_QUESTIONS
+        value: 12
+      - key: JWT_SECRET
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: true
+      - key: USE_MEMORY_DB
+        value: false
+      - key: USE_MEMORY_QUEUE
+        value: false
+      - key: RUN_WORKER_IN_API
+        value: true

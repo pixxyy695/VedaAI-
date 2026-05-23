@@ -1,0 +1,21 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: vedai-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - vedai_mongo:/data/db
+
+  redis:
+    image: redis:7-alpine
+    container_name: vedai-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - vedai_redis:/data
+
+volumes:
+  vedai_mongo:
+  vedai_redis:
