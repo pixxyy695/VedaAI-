@@ -44,7 +44,6 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Set `OPENAI_API_KEY` in `.env` for real OpenAI generation. The default model is `gpt-5-nano` to keep demo costs low, and `OPENAI_MODEL` can be changed without code edits.
 
-For a public deployment, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## Free Hosted Demo Mode
 
